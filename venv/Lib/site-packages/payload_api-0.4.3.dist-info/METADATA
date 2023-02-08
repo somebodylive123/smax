@@ -1,0 +1,152 @@
+Metadata-Version: 2.1
+Name: payload-api
+Version: 0.4.3
+Summary: Payload Python Library
+Home-page: https://github.com/payload-code/payload-python
+Author: Payload
+Author-email: help@payload.co
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+Requires-Dist: six
+
+# Payload Python Library
+
+A Python library for integrating [Payload](https://payload.co).
+
+## Installation
+
+## Install using pip
+
+```bash
+pip install payload-api
+```
+
+## Get Started
+
+Once you've installed the Payload Python library to your environment,
+import the `payload` module to get started. **Note:** We recommend
+using the shorthand name of `pl` when importing.
+
+```python
+import payload as pl
+```
+
+### API Authentication
+
+To authenticate with the Payload API, you'll need a live or test API key. API
+keys are accessible from within the Payload dashboard.
+
+```python
+import payload as pl
+pl.api_key = 'secret_key_3bW9JMZtPVDOfFNzwRdfE'
+```
+
+----------------------------
+
+Session based:
+
+```python
+import payload
+pl = payload.Session('secret_key_3bW9JMZtPVDOfFNzwRdfE')
+```
+
+
+### Creating an Object
+
+Interfacing with the Payload API is done primarily through Payload Objects. Below is an example of
+creating a customer using the `pl.Customer` object.
+
+
+```python
+# Create a Customer
+customer = pl.Customer.create(
+	email='matt.perez@example.com',
+	name='Matt Perez'
+)
+```
+
+
+```python
+# Create a Payment
+payment = pl.Payment.create(
+    amount=100.0,
+    payment_method=pl.Card(
+        card_number='4242 4242 4242 4242'
+    )
+)
+```
+
+### Accessing Object Attributes
+
+Object attributes are accessible through dot notation.
+
+```python
+customer.name
+```
+
+### Updating an Object
+
+Updating an object is a simple call to the `update` object method.
+
+```python
+# Updating a customer's email
+customer.update( email='matt.perez@newwork.com' )
+```
+
+### Selecting Objects
+
+Objects can be selected using any of their attributes.
+
+```python
+# Select a customer by email
+customers = pl.Customer.filter_by(
+    email='matt.perez@example.com'
+)
+```
+
+Use the `pl.attr` attribute helper
+interface to write powerful queries with a little extra syntax sugar.
+
+```python
+payments = pl.Payment.filter_by(
+    pl.attr.amount > 100,
+    pl.attr.amount < 200,
+    pl.attr.description.contains("Test"),
+    pl.attr.created_at > datetime(2021,2,1)
+).all()
+```
+
+### Testing the Payload Python Library
+
+Tests are contained within the tests/ directory. To run a test file, once within the
+pipenv shell, enter the command in terminal
+
+```bash
+TEST_SECRET_KEY=test_api_key pytest tests/{__FILENAME__}.py
+ ```
+
+
+## Documentation
+
+To get further information on Payload's Python library and API capabilities,
+visit the unabridged [Payload Documentation](https://docs.payload.co/?python).
+
+
