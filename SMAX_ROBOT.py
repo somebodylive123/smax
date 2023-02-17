@@ -3,8 +3,9 @@ import smtplib
 import mailparser
 import base64
 import os
+import time
 from dotenv import load_dotenv
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup   
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
@@ -66,6 +67,6 @@ if msg_list:
     smtp_conn.quit()
 
     pop_conn.dele(msg_list[0])
-
+    
 # Close the connection to the mailbox
 pop_conn.quit()
